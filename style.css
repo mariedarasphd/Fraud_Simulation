@@ -1,0 +1,112 @@
+/* General body */
+body {
+  font-family: Arial, sans-serif;
+  background: #0b0f1a;
+  color: #fff;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Headings */
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Container & grid */
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Panels */
+.panel {
+  background: #12182a;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(31, 111, 235, 0.2);
+  transition: 0.3s;
+}
+
+.panel:hover {
+  box-shadow: 0 0 25px rgba(31, 111, 235, 0.5);
+}
+
+/* Inputs */
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: none;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  padding: 10px;
+  background: #1f6feb;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+button:hover {
+  background: #388bfd;
+}
+
+/* Risk Bar */
+.risk-bar {
+  width: 100%;
+  height: 20px;
+  background: #222;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+#riskFill {
+  height: 100%;
+  width: 0%;
+  background: green;
+  transition: width 0.6s ease, background 0.6s ease;
+}
+
+/* Decision Panel */
+.decision-panel {
+  margin-top: 20px;
+  padding: 15px;
+  background: #1a1f35;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1.2em;
+  box-shadow: 0 0 10px rgba(31, 111, 235, 0.2);
+  transition: box-shadow 0.3s;
+}
+
+.decision-panel:hover {
+  box-shadow: 0 0 20px rgba(31, 111, 235, 0.5);
+}
+
+#decision {
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  transition: background 0.5s, color 0.5s, box-shadow 0.5s;
+}
+
+/* Glow animation */
+@keyframes pulse {
+  0% { box-shadow: 0 0 15px rgba(255,0,0,0.3); }
+  50% { box-shadow: 0 0 25px rgba(255,0,0,0.7); }
+  100% { box-shadow: 0 0 15px rgba(255,0,0,0.3); }
+}
