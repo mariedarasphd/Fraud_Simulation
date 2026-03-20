@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fraud Risk Simulator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <h1>Fraud Risk Intelligence Simulator</h1>
+
+  <div class="grid">
+
+    <!-- INPUT PANEL -->
+    <div class="panel">
+      <h2>Transaction Inputs</h2>
+
+      <h3>Quick Scenarios</h3>
+      <button onclick="runScenario(9000,1,1,8)">High-Risk Transfer</button>
+      <button onclick="runScenario(200,0,0,1)">Normal Purchase</button>
+      <button onclick="runScenario(3000,1,0,6)">Suspicious Activity</button>
+
+      <label>Amount</label>
+      <input type="number" id="amount" value="1000">
+
+      <label>Location</label>
+      <select id="location">
+        <option value="0">Domestic</option>
+        <option value="1">International</option>
+      </select>
+
+      <label>Device</label>
+      <select id="device">
+        <option value="0">Known</option>
+        <option value="1">Unknown</option>
+      </select>
+
+      <label>Transactions (24h)</label>
+      <input type="number" id="frequency" value="1">
+
+      <button onclick="calculateRisk()">Run Simulation</button>
+    </div>
+
+    <!-- OUTPUT PANEL -->
+    <div class="panel">
+      <h2>Risk Output</h2>
+
+      <div class="risk-bar">
+        <div id="riskFill"></div>
+      </div>
+
+      <h3 id="result">Risk Score: --</h3>
+      <ul id="flags"></ul>
+
+      <!-- Decision Panel -->
+      <div class="decision-panel">
+        <h3>Recommended Action</h3>
+        <div id="decision">--</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
