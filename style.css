@@ -40,20 +40,7 @@ h1 {
   overflow-y: auto;   /* internal scroll if content exceeds height */
 }
 
-/* Quick scenario buttons horizontal scroll */
-.quick-scenarios {
-  display: flex;
-  overflow-x: auto;
-  padding-bottom: 5px;
-  gap: 6px;
-}
-.quick-scenarios button {
-  flex: 0 0 auto;
-  font-size: 0.85em;
-  padding: 6px;
-}
-
-/* Inputs, selects, buttons */
+/* --- Inputs, selects, buttons --- */
 input, select, button {
   width: 100%;
   padding: 6px;
@@ -128,7 +115,9 @@ button:hover {
   100% { box-shadow: 0 0 12px rgba(255,0,0,0.3); }
 }
 
-/* --- Medium screens (tablet) --- */
+/* --- Media Queries --- */
+
+/* Tablet screens */
 @media (min-width: 601px) and (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr 1fr; /* two columns */
@@ -145,7 +134,7 @@ button:hover {
   }
 }
 
-/* --- Large screens (desktop) --- */
+/* Desktop screens */
 @media (min-width: 901px) {
   .grid {
     grid-template-columns: 1fr 1fr;
@@ -158,7 +147,7 @@ button:hover {
   }
 }
 
-/* Optional: hide scrollbars for aesthetics */
+/* Optional: hide scrollbars inside panels for aesthetics */
 .panel::-webkit-scrollbar {
   width: 6px;
 }
