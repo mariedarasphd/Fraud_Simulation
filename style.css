@@ -1,4 +1,4 @@
-/* Mobile-first body */
+/* --- Mobile-first body --- */
 body {
   font-family: Arial, sans-serif;
   background: #0b0f1a;
@@ -11,8 +11,8 @@ body {
 /* Headings */
 h1 {
   text-align: center;
-  margin-bottom: 15px;
-  font-size: 1.8em;
+  margin-bottom: 12px;
+  font-size: 1.6em;
 }
 
 /* Container & grid */
@@ -25,42 +25,42 @@ h1 {
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr; /* stacked on mobile */
-  gap: 12px;
+  grid-template-columns: 1fr; /* stack on mobile */
+  gap: 10px;
 }
 
-/* Panels */
+/* --- Panels --- */
 .panel {
   background: #12182a;
-  padding: 12px;
+  padding: 10px;
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(31, 111, 235, 0.2);
   transition: 0.3s;
-  max-height: 400px; /* prevent huge panels on small screens */
-  overflow-y: auto;  /* internal scroll if needed */
+  max-height: 320px;  /* keeps panels compact on phone */
+  overflow-y: auto;   /* internal scroll if content exceeds height */
 }
 
-/* Quick scenario buttons scroll horizontally */
-.panel h3 + button {
-  display: inline-block;
-  width: auto;
-  margin-right: 8px;
-  margin-bottom: 10px;
-}
-.panel .quick-scenarios {
+/* Quick scenario buttons horizontal scroll */
+.quick-scenarios {
   display: flex;
   overflow-x: auto;
   padding-bottom: 5px;
+  gap: 6px;
+}
+.quick-scenarios button {
+  flex: 0 0 auto;
+  font-size: 0.85em;
+  padding: 6px;
 }
 
-/* Inputs and select */
+/* Inputs, selects, buttons */
 input, select, button {
   width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
+  padding: 6px;
+  margin-bottom: 8px;
   border-radius: 5px;
   border: none;
-  font-size: 1em;
+  font-size: 0.9em;
   box-sizing: border-box;
 }
 
@@ -75,13 +75,13 @@ button:hover {
   background: #388bfd;
 }
 
-/* Risk Bar */
+/* Risk bar */
 .risk-bar {
   width: 100%;
-  height: 20px;
+  height: 15px; /* smaller on phones */
   background: #222;
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   overflow: hidden;
 }
 #riskFill {
@@ -91,14 +91,22 @@ button:hover {
   transition: width 0.6s ease, background 0.6s ease;
 }
 
-/* Decision Panel */
+/* Flags list */
+#flags {
+  max-height: 80px; /* scrollable if many flags */
+  overflow-y: auto;
+  padding-left: 16px;
+  margin-bottom: 8px;
+}
+
+/* Decision panel */
 .decision-panel {
-  margin-top: 10px;
-  padding: 12px;
+  margin-top: 8px;
+  padding: 8px;
   background: #1a1f35;
   border-radius: 10px;
   text-align: center;
-  font-size: 1em;
+  font-size: 0.9em;
   box-shadow: 0 0 10px rgba(31, 111, 235, 0.2);
   transition: box-shadow 0.3s;
 }
@@ -107,20 +115,20 @@ button:hover {
 }
 #decision {
   font-weight: bold;
-  padding: 10px;
+  padding: 6px;
   border-radius: 8px;
-  margin-top: 10px;
+  margin-top: 5px;
   transition: background 0.5s, color 0.5s, box-shadow 0.5s;
 }
 
 /* Glow animation */
 @keyframes pulse {
-  0% { box-shadow: 0 0 15px rgba(255,0,0,0.3); }
-  50% { box-shadow: 0 0 25px rgba(255,0,0,0.7); }
-  100% { box-shadow: 0 0 15px rgba(255,0,0,0.3); }
+  0% { box-shadow: 0 0 12px rgba(255,0,0,0.3); }
+  50% { box-shadow: 0 0 20px rgba(255,0,0,0.7); }
+  100% { box-shadow: 0 0 12px rgba(255,0,0,0.3); }
 }
 
-/* Medium screens (tablet) */
+/* --- Medium screens (tablet) --- */
 @media (min-width: 601px) and (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr 1fr; /* two columns */
@@ -128,9 +136,16 @@ button:hover {
   h1 {
     font-size: 2em;
   }
+  .decision-panel {
+    font-size: 1em;
+    padding: 10px;
+  }
+  .panel {
+    max-height: none; /* let tablets expand naturally */
+  }
 }
 
-/* Large screens (desktop) */
+/* --- Large screens (desktop) --- */
 @media (min-width: 901px) {
   .grid {
     grid-template-columns: 1fr 1fr;
@@ -143,7 +158,7 @@ button:hover {
   }
 }
 
-/* Optional: hide scrollbars for better aesthetics */
+/* Optional: hide scrollbars for aesthetics */
 .panel::-webkit-scrollbar {
   width: 6px;
 }
