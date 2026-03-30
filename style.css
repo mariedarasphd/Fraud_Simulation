@@ -1,17 +1,17 @@
-/* Mobile-first general body */
+/* Mobile-first body */
 body {
   font-family: Arial, sans-serif;
   background: #0b0f1a;
   color: #fff;
   margin: 0;
-  padding: 15px;
+  padding: 10px;
   box-sizing: border-box;
 }
 
 /* Headings */
 h1 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   font-size: 1.8em;
 }
 
@@ -25,31 +25,43 @@ h1 {
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr; /* stack by default on mobile */
-  gap: 15px;
+  grid-template-columns: 1fr; /* stacked on mobile */
+  gap: 12px;
 }
 
 /* Panels */
 .panel {
   background: #12182a;
-  padding: 15px;
+  padding: 12px;
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(31, 111, 235, 0.2);
   transition: 0.3s;
-}
-.panel:hover {
-  box-shadow: 0 0 25px rgba(31, 111, 235, 0.5);
+  max-height: 400px; /* prevent huge panels on small screens */
+  overflow-y: auto;  /* internal scroll if needed */
 }
 
-/* Inputs */
+/* Quick scenario buttons scroll horizontally */
+.panel h3 + button {
+  display: inline-block;
+  width: auto;
+  margin-right: 8px;
+  margin-bottom: 10px;
+}
+.panel .quick-scenarios {
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+/* Inputs and select */
 input, select, button {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 12px;
+  padding: 8px;
+  margin-bottom: 10px;
   border-radius: 5px;
   border: none;
   font-size: 1em;
-  box-sizing: border-box; /* prevents overflow */
+  box-sizing: border-box;
 }
 
 /* Buttons */
@@ -69,7 +81,7 @@ button:hover {
   height: 20px;
   background: #222;
   border-radius: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   overflow: hidden;
 }
 #riskFill {
@@ -81,8 +93,8 @@ button:hover {
 
 /* Decision Panel */
 .decision-panel {
-  margin-top: 15px;
-  padding: 15px;
+  margin-top: 10px;
+  padding: 12px;
   background: #1a1f35;
   border-radius: 10px;
   text-align: center;
@@ -93,7 +105,6 @@ button:hover {
 .decision-panel:hover {
   box-shadow: 0 0 20px rgba(31, 111, 235, 0.5);
 }
-
 #decision {
   font-weight: bold;
   padding: 10px;
@@ -112,7 +123,10 @@ button:hover {
 /* Medium screens (tablet) */
 @media (min-width: 601px) and (max-width: 900px) {
   .grid {
-    grid-template-columns: 1fr 1fr; /* two columns on tablets */
+    grid-template-columns: 1fr 1fr; /* two columns */
+  }
+  h1 {
+    font-size: 2em;
   }
 }
 
@@ -127,4 +141,13 @@ button:hover {
   .decision-panel {
     font-size: 1.2em;
   }
+}
+
+/* Optional: hide scrollbars for better aesthetics */
+.panel::-webkit-scrollbar {
+  width: 6px;
+}
+.panel::-webkit-scrollbar-thumb {
+  background-color: rgba(31,111,235,0.4);
+  border-radius: 3px;
 }
