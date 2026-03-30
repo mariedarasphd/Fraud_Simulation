@@ -1,34 +1,34 @@
-// Full Fraud Simulator with Decision Panel & Glow
+// Full Fraud Simulator with Decision Panel & Glow (Dropdown Quick Scenario Compatible)
 
 function calculateRisk() {
-  let amount = parseFloat(document.getElementById("amount").value);
-  let location = parseInt(document.getElementById("location").value);
-  let device = parseInt(document.getElementById("device").value);
-  let frequency = parseInt(document.getElementById("frequency").value);
+  const amount = parseFloat(document.getElementById("amount").value);
+  const location = parseInt(document.getElementById("location").value);
+  const device = parseInt(document.getElementById("device").value);
+  const frequency = parseInt(document.getElementById("frequency").value);
 
-  let amountScore = Math.min(amount / 10000, 1);
+  const amountScore = Math.min(amount / 10000, 1);
 
-  let riskScore =
+  const riskScore =
     (amountScore * 0.4) +
     (location * 0.2) +
     (device * 0.2) +
     (Math.min(frequency / 10, 1) * 0.2);
 
-  let riskPercent = Math.round(riskScore * 100);
+  const riskPercent = Math.round(riskScore * 100);
 
   let riskLevel = "Low";
   if (riskPercent > 70) riskLevel = "High";
   else if (riskPercent > 40) riskLevel = "Medium";
 
   // Flags
-  let flags = [];
+  const flags = [];
   if (amount > 5000) flags.push("High transaction amount");
   if (location === 1) flags.push("International transaction");
   if (device === 1) flags.push("Unknown device");
   if (frequency > 5) flags.push("High transaction frequency");
 
   // Animate risk number
-  let resultEl = document.getElementById("result");
+  const resultEl = document.getElementById("result");
   let current = 0;
   clearInterval(resultEl.interval);
   resultEl.interval = setInterval(() => {
@@ -41,24 +41,22 @@ function calculateRisk() {
   }, 10);
 
   // Animate risk bar
-  let bar = document.getElementById("riskFill");
+  const bar = document.getElementById("riskFill");
   bar.style.width = riskPercent + "%";
-
-  if (riskPercent > 70) bar.style.background = "red";
-  else if (riskPercent > 40) bar.style.background = "orange";
-  else bar.style.background = "green";
+  bar.style.background = riskPercent > 70 ? "red" :
+                         riskPercent > 40 ? "orange" : "green";
 
   // Update flags
-  let flagsList = document.getElementById("flags");
+  const flagsList = document.getElementById("flags");
   flagsList.innerHTML = "";
   flags.forEach(f => {
-    let li = document.createElement("li");
+    const li = document.createElement("li");
     li.innerText = f;
     flagsList.appendChild(li);
   });
 
   // Decision Panel with glow
-  let decisionEl = document.getElementById("decision");
+  const decisionEl = document.getElementById("decision");
   if (riskPercent > 70) {
     decisionEl.innerText = "Block";
     decisionEl.style.background = "red";
@@ -77,8 +75,14 @@ function calculateRisk() {
   }
 }
 
-// Scenario buttons
-function runScenario(amount, location, device, frequency) {
+// Run scenario from dropdown
+function runScenarioFromDropdown() {
+  const select = document.getElementById("scenarioSelect");
+  const value = select.value;
+  if (!value) return;
+
+  const [amount, location, device, frequency] = value.split(',').map(Number);
+
   document.getElementById("amount").value = amount;
   document.getElementById("location").value = location;
   document.getElementById("device").value = device;
