@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fraud Risk Simulator</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fraud Risk Simulator</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -12,19 +12,20 @@
   <h1>Fraud Risk Intelligence Simulator</h1>
 
   <div class="grid">
-
     <!-- INPUT PANEL -->
     <div class="panel">
       <h2>Transaction Inputs</h2>
 
-<h3>Quick Scenario</h3>
-<select id="scenarioSelect" onchange="runScenarioFromDropdown()">
-  <option value="">-- Select Risk Type --</option>
-  <option value="9000,1,1,8">High-Risk Transfer</option>
-  <option value="200,0,0,1">Normal Purchase</option>
-  <option value="3000,1,0,6">Suspicious Activity</option>
-</select>
+      <!-- Quick Scenario Dropdown -->
+      <label for="quickScenario"><h3>Quick Scenario</h3></label>
+      <select id="quickScenario" onchange="applyScenario()">
+        <option value="">Select a scenario...</option>
+        <option value="9000,1,1,8">High-Risk Transfer</option>
+        <option value="200,0,0,1">Normal Purchase</option>
+        <option value="3000,1,0,6">Suspicious Activity</option>
+      </select>
 
+      <!-- Manual Inputs -->
       <label>Amount</label>
       <input type="number" id="amount" value="1000">
 
@@ -53,8 +54,8 @@
       <div class="risk-bar">
         <div id="riskFill"></div>
       </div>
-
       <h3 id="result">Risk Score: --</h3>
+
       <ul id="flags"></ul>
 
       <!-- Decision Panel -->
@@ -63,10 +64,92 @@
         <div id="decision">--</div>
       </div>
     </div>
-
   </div>
 </div>
 
-<script src="script.js"></script>
+<script>
+// --- Apply selected quick scenario ---
+function applyScenario() {
+  const val = document.getElementById('quickScenario').value;
+  if (!val) return;
+
+  const [amount, location, device, frequency] = val.split(',').map(Number);
+  document.getElementById("amount").value = amount;
+  document.getElementById("location").value = location;
+  document.getElementById("device").value = device;
+  document.getElementById("frequency").value = frequency;
+
+  calculateRisk();
+}
+
+// --- Risk calculation ---
+function calculateRisk() {
+  let amount = parseFloat(document.getElementById("amount").value);
+  let location = parseInt(document.getElementById("location").value);
+  let device = parseInt(document.getElementById("device").value);
+  let frequency = parseInt(document.getElementById("frequency").value);
+
+  let amountScore = Math.min(amount / 10000, 1);
+  let riskScore = (amountScore * 0.4) + (location * 0.2) + (device * 0.2) + (Math.min(frequency / 10, 1) * 0.2);
+  let riskPercent = Math.round(riskScore * 100);
+
+  let riskLevel = "Low";
+  if (riskPercent > 70) riskLevel = "High";
+  else if (riskPercent > 40) riskLevel = "Medium";
+
+  // Flags
+  let flags = [];
+  if (amount > 5000) flags.push("High transaction amount");
+  if (location === 1) flags.push("International transaction");
+  if (device === 1) flags.push("Unknown device");
+  if (frequency > 5) flags.push("High transaction frequency");
+
+  // Animate risk number
+  let resultEl = document.getElementById("result");
+  let current = 0;
+  clearInterval(resultEl.interval);
+  resultEl.interval = setInterval(() => {
+    if (current >= riskPercent) clearInterval(resultEl.interval);
+    else {
+      current++;
+      resultEl.innerText = `Risk Score: ${current}% (${riskLevel})`;
+    }
+  }, 10);
+
+  // Animate risk bar
+  let bar = document.getElementById("riskFill");
+  bar.style.width = riskPercent + "%";
+  bar.style.background = riskPercent > 70 ? "red" : riskPercent > 40 ? "orange" : "green";
+
+  // Update flags
+  let flagsList = document.getElementById("flags");
+  flagsList.innerHTML = "";
+  flags.forEach(f => {
+    let li = document.createElement("li");
+    li.innerText = f;
+    flagsList.appendChild(li);
+  });
+
+  // Decision Panel with glow
+  let decisionEl = document.getElementById("decision");
+  if (riskPercent > 70) {
+    decisionEl.innerText = "Block";
+    decisionEl.style.background = "red";
+    decisionEl.style.color = "white";
+    decisionEl.style.animation = "pulse 1s infinite";
+  } else if (riskPercent > 40) {
+    decisionEl.innerText = "Review";
+    decisionEl.style.background = "orange";
+    decisionEl.style.color = "black";
+    decisionEl.style.animation = "";
+  } else {
+    decisionEl.innerText = "Approve";
+    decisionEl.style.background = "green";
+    decisionEl.style.color = "white";
+    decisionEl.style.animation = "";
+  }
+}
+</script>
+
 </body>
 </html>
